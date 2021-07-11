@@ -16,8 +16,8 @@ class UserController{
         if(tweet_text.length >= 240) return  res.status(400).json({message:"sorry, max 240 characters"})
 
         try{
-            await db.tweet.create({user_id:id, tweet_text})
-            res.status(201).json({message:"your tweet was uploaded"})
+            const data = await db.tweet.create({user_id:id, tweet_text})
+            res.status(201).json({message:"your tweet was uploaded", data})
         }catch(err){
             console.log(err)
         }
@@ -27,7 +27,8 @@ class UserController{
         const {tweet_text, image} = req.body
         try{
             await db.tweet.update({tweet_text},{where:{id}})
-            res.status(201).json({message:"your tweet was updated"})
+            const data = await db.tweet.findOne({where:{id}})
+            res.status(201).json({message:"your tweet was updated", data})
         }catch(err){
             console.log(err)
         }
