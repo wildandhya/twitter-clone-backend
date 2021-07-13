@@ -3,7 +3,12 @@ const db = require('../db/model')
 class UserController{
     static async FindAllTweet(req, res, next){
         try{
-            const data = await db.tweet.findAll()
+            const data = await db.tweet.findAll({
+                order: [
+                    ['created_at', 'DESC'],
+                    ['updated_at', 'DESC'],
+                ],
+            })
             res.status(201).json({data})
         }catch(err){
             console.log(err)
